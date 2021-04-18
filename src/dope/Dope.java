@@ -7,7 +7,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Scanner;
 
 public class Dope {
     static boolean hadError = false;
@@ -43,16 +42,16 @@ public class Dope {
     }
 
     private static void run(String source) {
-//        Scanner scanner = new Scanner(source);
-//        List<Token> tokens = scanner.scanTokens();
-//
-//        for (Token token : tokens) {
-//            System.out.println(token);
-//        }
-    }
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
 
-    static void error(int line, String message) {
-        report(line, "", message);
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
+
+        // Stop if there was a syntax error.
+        if (hadError) return;
+
+        System.out.println(new AstPrinter().print(expression));
     }
 
     private static void report(int line, String where, String message) {
@@ -60,5 +59,15 @@ public class Dope {
         hadError = true;
     }
 
+    static void error(int line, String message) {
+        report(line, "", message);
+    }
 
+    static void error(Token token, String message) {
+        if (token.type == TokenType.EOF) {
+            report(token.line, " at end", message);
+        } else {
+            report(token.line, " at '" + token.lexeme + "'", message);
+        }
+    }
 }
