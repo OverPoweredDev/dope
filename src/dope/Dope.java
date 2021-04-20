@@ -13,6 +13,30 @@ TODO:
  - '>' shows up before the error message while running from prompt
  - "Error: Unexpected Character" shows up twice
  - make a whole new Error class
+ - Make a new '>' show up even after hitting enter
+*/
+
+/*
+Rules for the language
+
+program        → declaration* EOF ;
+
+declaration    → varDecl | statement ;
+
+varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
+statement      → exprStmt | ifStmt | printStmt | block ;
+
+ifStmt         → "if" "(" expression ")" statement ( "else" statement )? ;
+block          → "{" declaration* "}" ;
+expression     → assignment ;
+
+assignment     → IDENTIFIER "=" assignment | equality ;
+comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+term           → factor ( ( "-" | "+" ) factor )* ;
+factor         → unary ( ( "/" | "*" ) unary )* ;
+unary          → ( "!" | "-" ) unary | primary ;
+
+primary        → NUMBER | IDENTIFIER | STRING | "true" | "false" | "nil" | "(" expression ")" ;
 */
 
 public class Dope {
@@ -56,12 +80,12 @@ public class Dope {
         List<Token> tokens = scanner.scanTokens();
 
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         // Stop if there was a syntax error.
         if (hadError) return;
 
-        interpreter.interpret(expression);
+        interpreter.interpret(statements);
     }
 
     private static void report(int line, String where, String message) {

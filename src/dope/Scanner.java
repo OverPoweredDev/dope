@@ -1,4 +1,5 @@
 package dope;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,33 +8,33 @@ import java.util.Map;
 import static dope.TokenType.*;
 
 class Scanner {
-    private final String source;
-    private final List<Token> tokens = new ArrayList<>();
     private static final Map<String, TokenType> keywords;
-
-    private int start = 0;
-    private int current = 0;
-    private int line = 1;
 
     static {
         keywords = new HashMap<>();
-        keywords.put("and",    AND);
-        keywords.put("class",  CLASS);
-        keywords.put("else",   ELSE);
-        keywords.put("false",  FALSE);
-        keywords.put("for",    FOR);
-        keywords.put("fun",    FUN);
-        keywords.put("if",     IF);
-        keywords.put("nil",    NIL);
-        keywords.put("or",     OR);
-        keywords.put("print",  PRINT);
+        keywords.put("and", AND);
+        keywords.put("class", CLASS);
+        keywords.put("else", ELSE);
+        keywords.put("false", FALSE);
+        keywords.put("for", FOR);
+        keywords.put("fun", FUN);
+        keywords.put("if", IF);
+        keywords.put("nil", NIL);
+        keywords.put("or", OR);
+        keywords.put("print", PRINT);
         keywords.put("return", RETURN);
-        keywords.put("super",  SUPER);
-        keywords.put("this",   THIS);
-        keywords.put("true",   TRUE);
-        keywords.put("var",    VAR);
-        keywords.put("while",  WHILE);
+        keywords.put("super", SUPER);
+        keywords.put("this", THIS);
+        keywords.put("true", TRUE);
+        keywords.put("var", VAR);
+        keywords.put("while", WHILE);
     }
+
+    private final String source;
+    private final List<Token> tokens = new ArrayList<>();
+    private int start = 0;
+    private int current = 0;
+    private int line = 1;
 
     Scanner(String source) {
         this.source = source;
@@ -58,16 +59,36 @@ class Scanner {
         char c = advance();
         switch (c) {
             //single character lexemes
-            case '(': addToken(LEFT_PAREN); break;
-            case ')': addToken(RIGHT_PAREN); break;
-            case '{': addToken(LEFT_BRACE); break;
-            case '}': addToken(RIGHT_BRACE); break;
-            case ',': addToken(COMMA); break;
-            case '.': addToken(DOT); break;
-            case '-': addToken(MINUS); break;
-            case '+': addToken(PLUS); break;
-            case ';': addToken(SEMICOLON); break;
-            case '*': addToken(STAR); break;
+            case '(':
+                addToken(LEFT_PAREN);
+                break;
+            case ')':
+                addToken(RIGHT_PAREN);
+                break;
+            case '{':
+                addToken(LEFT_BRACE);
+                break;
+            case '}':
+                addToken(RIGHT_BRACE);
+                break;
+            case ',':
+                addToken(COMMA);
+                break;
+            case '.':
+                addToken(DOT);
+                break;
+            case '-':
+                addToken(MINUS);
+                break;
+            case '+':
+                addToken(PLUS);
+                break;
+            case ';':
+                addToken(SEMICOLON);
+                break;
+            case '*':
+                addToken(STAR);
+                break;
 
             //division is slightly weird cuz comments start with / too
             case '/':
@@ -94,18 +115,26 @@ class Scanner {
                 break;
 
             //whitespace and shiet
-            case ' ': break;
+            case ' ':
+                break;
 
-            case '\r': break;
+            case '\r':
+                break;
 
-            case '\t': break;
+            case '\t':
+                break;
 
             case '\n':
                 line++;
                 break;
 
             //string literals
-            case '"': string(); break;
+            case '"':
+                string();
+                break;
+            case '\'':
+                string();
+                break;
 
 
             //in case of a non-supported char like @ or # or something
@@ -146,7 +175,7 @@ class Scanner {
 
 
     private void string() {
-        while (peek() != '"' && !isAtEnd()) {
+        while (peek() != '"' && peek() != '\'' && !isAtEnd()) {
             if (peek() == '\n') line++;
             advance();
         }
@@ -156,7 +185,7 @@ class Scanner {
             return;
         }
 
-        // The closing ".
+        // The closing " or '.
         advance();
 
         // Trim the surrounding quotes.
