@@ -81,8 +81,10 @@ public class Dope {
 
         Parser parser = new Parser(tokens);
         List<Stmt> statements = parser.parse();
+        if (hadError) return;
 
-        // Stop if there was a syntax error.
+        Resolver resolver = new Resolver(interpreter);
+        resolver.resolve(statements);
         if (hadError) return;
 
         interpreter.interpret(statements);

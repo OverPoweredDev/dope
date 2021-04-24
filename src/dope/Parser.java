@@ -128,6 +128,7 @@ public class Parser {
         }
         return new Stmt.If(condition, thenBranch, elseBranch);
     }
+
     private Stmt returnStatement() {
         Token keyword = previous();
         Expr value = null;
@@ -138,6 +139,7 @@ public class Parser {
         consume(SEMICOLON, "Expect ';' after return value.");
         return new Stmt.Return(keyword, value);
     }
+
     private Stmt whileStatement() {
         consume(LEFT_PAREN, "Expect '(' after 'while'.");
         Expr condition = expression();
