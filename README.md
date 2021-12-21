@@ -6,10 +6,10 @@
 
 # INTRODUCTION
 
-✨DOPE✨ is a dynamically typed and automatically managed language which follows an imperative as well as object oriented paradigm and has been implemented in JAVA.
+Dope is a dynamically typed and automatically managed language which follows an imperative as well as object oriented paradigm and has been implemented in JAVA.
 It runs on both REPL (Read, execute , print ,loop) and a text file and is equipped with an inbuilt garbage collector as well.
 
-# CURRENT FEATURES ✨🤩✨
+# CURRENT FEATURES 
 
 - Supported data types - number, boolean, string and null.
 - Supported Expressions - Arithematic, Logical, Comparison with C like precedence. 
