@@ -12,7 +12,7 @@ It runs on both REPL (Read, execute , print ,loop) and a text file and is equipp
 # Basic Features 
 
 - Supported data types - number, boolean, string and null.
-- Supported Expressions - Arithmatic, Logical, Comparison with C like precedence. 
+- Supported Expressions - Arithmetic, Logical, Comparison with C like precedence. 
 - Can implement basic OOP concepts like use of inheritance, classes, etc.
 - Has a resolver, parser, interpreter and standard inbuilt functions like print() and clock().
   - print() prints a statement to the terminal, clock() returns current system time.
